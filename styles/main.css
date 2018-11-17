@@ -1,0 +1,26 @@
+* {
+    margin: 0;
+    padding: 0;
+}
+body{
+    overflow: hidden;
+} 
+#canvas {
+    cursor: pointer;
+    background-color: #ccc;
+}
+
+.actions {
+    position: fixed;
+    left: 24px;
+    top: 24px;
+}
+.actions > #eraser {
+    display: none;
+}
+.actions.active > #brush {
+    display: none;
+}
+.actions.active > #eraser {
+    display: inline-block;
+}
