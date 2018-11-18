@@ -27,36 +27,67 @@ function listenToUser(canvas) {
         x: 0,
         y: 0,
     }
-    // 鼠标按下，开始绘制圆和绘制开始点
-    canvas.onmousedown = function (event) {
-        let x = event.clientX
-        let y = event.clientY
-        using = true
-        if (eraserEnabled) {
-            context.clearRect(x, y, eraserSize, eraserSize)
-        } else {
-            lastPoint = { x, y }
+
+    if (document.body.ontouchstart !== undefined) {
+        // 触摸设备
+        canvas.ontouchstart = function (event) {
+            let x = event.touches[0].clientX 
+            let y = event.touches[0].clientY
+            using = true
+            if (eraserEnabled) {
+                context.clearRect(x, y, eraserSize, eraserSize)
+            } else {
+                lastPoint = { x, y }
+            }
+        }
+        canvas.ontouchmove = function (event) {
+            if (!using) return
+            let x = event.touches[0].clientX 
+            let y = event.touches[0].clientY
+            if (eraserEnabled) {
+                context.clearRect(x, y, eraserSize, eraserSize)
+            } else {
+                drawLine(lastPoint, { x, y }, lineSize)
+                lastPoint = { x, y }
+            }
+        }
+        canvas.ontouchend = function () {
+            using = false
+        }
+    } else {
+        // 非触摸设备
+        // 鼠标按下，开始绘制圆和绘制开始点
+        canvas.onmousedown = function (event) {
+            let x = event.clientX
+            let y = event.clientY
+            using = true
+            if (eraserEnabled) {
+                context.clearRect(x, y, eraserSize, eraserSize)
+            } else {
+                lastPoint = { x, y }
+            }
+        }
+
+        // 鼠标移动开始连线
+        canvas.onmousemove = function (event) {
+            if (!using) return
+            let x = event.clientX
+            let y = event.clientY
+
+            if (eraserEnabled) {
+                context.clearRect(x, y, eraserSize, eraserSize)
+            } else {
+                drawLine(lastPoint, { x, y }, lineSize)
+                lastPoint = { x, y }
+            }
+        }
+
+        // 鼠标弹起结束绘制
+        canvas.onmouseup = function (event) {
+            using = false
         }
     }
 
-    // 鼠标移动开始连线
-    canvas.onmousemove = function (event) {
-        if (!using) return
-        let x = event.clientX
-        let y = event.clientY
-
-        if (eraserEnabled) {
-            context.clearRect(x, y, eraserSize, eraserSize)
-        } else {
-            drawLine(lastPoint, { x, y }, lineSize)
-            lastPoint = { x, y }
-        }
-    }
-
-    // 鼠标弹起结束绘制
-    canvas.onmouseup = function (event) {
-        using = false
-    }
 }
 
 
