@@ -1,6 +1,6 @@
 <p align="center">
   <a href="https://sketchpad.ylzon.com/index.html">
-    <img width="800" src="https://ws2.sinaimg.cn/large/006tNbRwgy1fxc9mfr9dsj31870u0q4c.jpg">
+    <img width="800" src="http://static.ylzon.com/blog/ZluRNW.png">
   </a>
 </p>
 <h1 align="center">Canvas画板</h1>
